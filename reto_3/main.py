@@ -1,22 +1,38 @@
-
-from poligons import Rectangle, Square
-from poligons.primitives import Line, Point
-from poligons import Method1, Method2, Method3
+from restaurant.items import *
+from restaurant.orders import Order
 
 if __name__ == "__main__":
-    rectangle = Rectangle(center=Point(0, 0), width=4, height=6)
-    square = Square(center=Point(1, 1), width=4, height=4)
+    
+    # Create a list of different menu items.
+    items = [
+        Beverage("Large", "Coca-Cola", 2.5, 2),              
+        Appetizer(True, "Bruschetta", 4.0, 1),               
+        MainCourse("Grilled", "Steak", 18.0, 1),             
+        Dessert(True, "Cheesecake", 6.0, 2),                 
+        SideDish("Medium", "French Fries", 3.5, 1),          
+        Soup(True, "Tomato Soup", 5.0, 3),                   
+        Salad("Caesar", "Caesar Salad", 7.0, 1),             
+        Sandwich("Whole Wheat", "Chicken Sandwich", 8.0, 2), 
+        Pasta("Carbonara", "Spaghetti", 10.0, 1),            
+        Pizza("Classic", "Margherita Pizza", 12.0, 2),       
+    ]
 
-    print(rectangle.compute_area())
-    print(rectangle.compute_perimeter())
+    # Create an order and add all items
+    order = Order()
+    order.add_items(items)
 
-    print(square.compute_area())
-    print(square.compute_perimeter())
+    # Calculate and display the total with discount (if applicable)
+    try:
+        total = order.calculate_total()
+        print(f"Total before discount: ${total:.2f}")
+        total_after_discount = order.apply_discount()
+        print(f"Total after discount: ${total_after_discount:.2f}")
+    except Exception as e:
+        print(e)
 
-    print(rectangle.compute_interference_point(point = Point(7,7), method= Method1))
-    print(rectangle.compute_interference_point(point = Point(7,7), method= Method2))
-    print(rectangle.compute_interference_point(point = Point(7,7), method= Method3))
-
-    print(square.compute_interference_point(point = Point(2,2), method= Method1))
-    print(square.compute_interference_point(point = Point(2,2), method= Method2))
-    print(square.compute_interference_point(point = Point(2,2), method= Method3))
+    # Test error handling: attempt to calculate total on an empty order
+    try:
+        order.clean_order()  
+        total_empty = order.calculate_total()  
+    except Exception as e:
+        print(e)  

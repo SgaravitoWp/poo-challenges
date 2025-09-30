@@ -1,1 +1,0 @@
-from poligons.primitives.entities import Point, Line, Edge 
